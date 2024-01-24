@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 module.exports = {
   packagerConfig: {
     asar: true,
@@ -32,4 +34,10 @@ module.exports = {
       config: {},
     },
   ],
+  hooks: {
+    packageAfterCopy: async (config, buildPath, electronVersion, platform, arch) => {
+      fs.cpSync(__dirname + "/php", buildPath+"/../../php/", {recursive: true});
+      fs.cpSync(__dirname + "/www", buildPath+"/../../www/", {recursive: true});
+    }
+  }
 };
